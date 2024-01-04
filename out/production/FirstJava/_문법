@@ -1,0 +1,648 @@
+Java 문법 종합반
+
+[용어정리]
+*데이터: 컴퓨터가 정보를 담는 자료값
+*데이터타입(자료형): 데이터의 유형 (EX, 정수, 문자, 부동소숫점 등)
+*자료구조: 데이터 여러개를 분류해서 담을 수 있는 분류통
+*문맥: 개발언어로 표현한 프로그램의 동작 흐름을 의미
+*메서드: 데이터와 문맥을 감싸는 포장지
+*공통실행환경: 여러 기기의 운영환경에서 실행 할 수 있도록 판을 깔아주는 실행환경
+*운영체제: 기기가 프로그램을 실행시키는 운영환경(EX, Windows, Android, iOS, Linux 등)
+
+[JAVA언어 특징]
+JAVA: 1990년대 만들어짐.
+입/출력, 문맥기능, 기계식 데이터타입, 연산기능, 메서드, 자료형 데이터타입, 자료구조, 공통실행환경(JVM), 클래스, 객체 기능 구현가능
+
+Java소스파일(.java) > Java Complier > Java Byte code(.class) > Class Loader > JIT complier      > Runtime 시스템
+																		   > Java interpreter
+
+[메모리 영역]
+Stack: 정적으로 할당된 메모리 영역. 크기가 정해져있는 기본형 변수 저장. 크기가 정해져 있는 참조형 변수도 저장함
+Heap: 동적으로 할당된 메모리 영역. 크기가 계속 늘어날 수 있는 참조형 변수의 원본을 저장
+[변수의 저장위치]
+*참조형 변수: Heap영역에 저장
+메모리영역에는Stack영역과 Heap영역이 있는데 참조형 변수는 Heap영역에 저장되고
+Stack영역에 heap영역의 주소값만 들어가서 사용된다.(실제 값이 아닌 원본값의 주소값을 저장)
+*기본형 변수: Stack영역에 저장
+
+[for문 증감연산]
+https://nibble1492.tistory.com/7
+
+[향상된 for문]
+ //향상된 for문: 배열을 이용해서 변수에 배열에 들어있는 값을 순차적으로 입력
+        int[] numbers = {3, 5, 7, 9, 11, 13, 15};
+
+        System.out.println("향상된 for문으로 작성");
+        for ( int number: numbers ) {
+            System.out.print(number + " ");
+        }
+
+[배열(array)]
+*선언 방법: int[] intArray; || int intArray[];
+*생성 방법: int intArray[] = new int[8]; //  intArray라는 배열에 8칸을 할당(0~7)
+*초기화
+        //배열생성테스트
+        //int타입
+        int[] intArr = new int[3]; //0,1,2번 정수 칸 생성
+        System.out.print("{" + intArr[0] + ",");  //초기값 확인 {0,0,0}
+        System.out.print(intArr[1] + ",");
+        System.out.println(intArr[2] + "}");
+
+        //단건 조회
+        System.out.println(intArr[1]); //인덱스 0,1,2중에 1번 값을 출력
+
+        //다건조회
+        for (int i = 0; i < intArr.length; i++) {
+            System.out.println(intArr[i]);
+        }
+*for문을 이용한 초기화
+		// for문을 이용해서 입력
+        for (int i = 0; i < intArr.length; i++) {
+            intArr[i] = i;
+            System.out.println(intArr[i]);
+
+*같은값으로 일괄 입력 (Arrays class 이용)
+		// 배열의 주소를 모두 같은 값으로 초기화 (class호출 필요)
+        Arrays.fill(intArr, 1);
+        for (int x: intArr) {
+            System.out.println(x);
+        }
+
+*복사: 이전에 참조형 변수는 Heap영역에 복사되어 stack영역에 주소값만 입력되어 사용된다고 했었음.
+	  간단하게 설명하면 얕은복사는 a.txt라는 텍스트파일을 바로가기로 만들어서 b.txt로 변경해서 사용하는 것
+	  깊은복사는 a.txt라는 텍스트파일의 모든 내용을 복사해서 b.txt를 만들어서 사용하는 것
+		//얕은 복사: 주소값만 복사되고 실제값은 1개로 유지되는걸 얕은 복사
+
+        int[] a = {1, 2, 3, 4};
+        int[] b = a; //얕은 복사 진행
+
+        b[0] = 3;
+        System.out.println(a[0]); //a[0] 값도 3으로 변경됨.
+
+		//깊은 복사: 2번재 열에서 new int를 생성함으로서 주소값이 a, b 나뉘어지고 그 후에 b[i] = a[i] 가 진행되서 a값에 변동이 없음.
+		int[] c = {1, 2, 3, 4};
+        int[] d = new int[c.length]; //배열 a와 같은 값으로 b 배열을 '새로'생성
+
+        for ( int i = 0; i < a.length; i++ ){
+            d[i] = c[i];  //깊은 복사
+        }
+
+        d[0] = 3;
+        System.out.println(c[0]); //a[0]은 그대로 1 유지
+
+		//깊은 복사를 위의 과정없이 진행할 수 있는 방법은 2가지가 있음.
+        // Arrays.copyOf() 메소드
+        int[] a = {1, 2, 3, 4};
+        int[] b = Arrays.copyOf(a, a.length); //배열생성 과 함께 length값 같이 복사됨.
+
+        a[3] = 0;
+        System.out.println(a[3]);  //바로 위에서 0으로 변경
+        System.out.println(b[3]); //깊은 복사이기 때문에 생성될때 값인 4로 유지
+
+        //clone 메소드  **1차원 배열에서만 깊은복사로 진행되고, 2차원 이상은 메소드를 사용해도 얕은복사로 복사
+        int[] c = {1, 2, 3, 4};
+        int[] d = c.clone();
+
+        c[2] = 0;
+        System.out.println(c[2]); // 바로 위에서 0으로 변경
+        System.out.println(d[2]); // 깊은 복사이기 때문에 쌩성될때 값인 3으로 유지
+
+[다차원배열]
+*선언 방법: int[][] intArray2; || int intArray2[][] || int[] intArray2[];
+*생성 방법: int[][] intArray2 = new int[][];
+*초기화
+        //배열생성테스트
+        //int타입
+        int[] intArr = new int[3]; //0,1,2번 정수 칸 생성
+        System.out.print("{" + intArr[0] + ",");  //초기값 확인 {0,0,0}
+        System.out.print(intArr[1] + ",");
+        System.out.println(intArr[2] + "}");
+
+        //단건 조회
+        System.out.println(intArr[1][2]); //인덱스 1열 2행 값을 출력
+
+        //다건 조회
+        for (int i = 0; i < intArr.length; i++) {
+            for (int j = 0; j < intArr[i].length; j++) {
+                System.out.println(i + ", " + j + "=> " + intArr[i][j]);
+            }
+        }
+
+*for문을 이용한 초기화
+       //초기화
+        for (int x = 0; x < intArr.length; x++) {
+            for (int y = 0; y < intArr[x].length; y++) {
+                intArr[x][y] = 1;
+            }
+        }
+
+
+[Collection]
+*기능: 크기 자동조정/수정/삭제/반복/순회/필터/포함확인 등
+*Collection은 참조형 변수에 저장한다 (EX. Integer, Long, String ..)
+*종류
+	**특정값 삭제시 Queue, Set은 index를 입력하는게 아닌 입력된 값을 넣어야하는 것으로 보임
+	*List: 순서가 있는 데이터의 집합(데이터 중복을 허용) - 배열과 비슷
+			List에는 ArrayList와 LinkedList가 존재.
+			차이점은 LinkedList는 메모리에 남는 공간 요청해서 값을 나눠놓아서 조회는 느리고, 추가 및 삭제는 빠르다.
+			(사용방법은 동일하고 생성방법 만 ArrayList, LinkedList 로 다르다)
+
+        //1. List 생성
+        ArrayList<Integer> intList = new ArrayList<Integer>();
+        //2. 값 입력
+        intList.add(1);
+        intList.add(2);
+        intList.add(3);
+        intList.add(2, 4);  //2번자리에 4라는 값을 추가. (1, 2, 3) -> (1, 2, 4, 3)
+        //3. 값 출력
+        System.out.println(intList.get(0));
+        System.out.println(intList.get(1));
+        System.out.println(intList.get(2));
+        System.out.println(intList.get(3));
+        System.out.println(intList.toString()); //모든 값 출력
+        //4. 값 수정
+        intList.set(1, 20); //앞은 0부터 시작, 현재는 값이 2인 배열 수정
+        System.out.println(intList.get(1));
+        //5. 값 삭제
+        System.out.println(intList.get(0)); // 1번 값 0
+        intList.remove(0);
+        System.out.println(intList.get(0)); // 1번 값 0 이 삭제되서 1값이 1번이됨.
+        //6. 값 모두 삭제
+        intList.clear();
+        System.out.println(intList.toString());
+
+	*Stack: 먼저 들어간 데이터가 마지막에 나오는 집합 (FILO)
+
+	    //1. Stack 생성
+        Stack<Integer> intStack = new Stack<Integer>();
+        //2. 값 입력
+        intStack.push(10);
+        intStack.push(15);
+        intStack.push(20);
+        //3. 값 꺼내기
+        // isEmpty <- 비어있으면 true, 들어있으면 false
+        //pop을 이용해서 바스켓에서 마지막에 들어간 순서로 뺌
+        while(!intStack.isEmpty()){
+            System.out.println(intStack.pop());
+        }
+        //4-1. 값 재입력
+        intStack.push(10);
+        intStack.push(15);
+        intStack.push(20);
+        //4-2. 값 조회
+        System.out.println(intStack.peek()); //마지막에 입력된 값 조회
+        System.out.println(intStack.size()); //스택에 들어있는 값 갯수 조회
+        //5. 값 삭제
+        intStack.remove(0);
+        System.out.println(intStack.size()); //0번 인덱스 삭제로 값 갯수 2
+        //6. 값 모두 삭제
+        intStack.clear();
+        System.out.println(intStack.size()); //모두 삭제 후 값: 0
+
+	*Queue : 데이터가 들어간 순서대로 데이터를 뺄 수 있는 집합 (FIFO)
+		생성자가 없는 인터페이스?
+
+        //1. Queue 생성
+        Queue<Integer> intQueue = new LinkedList<>();
+        //2. 값 입력
+        intQueue.add(1);
+        intQueue.add(3);
+        intQueue.add(5);
+        //3. 값 꺼내기
+        //들어간 순서대로 나옴
+        while(!intQueue.isEmpty()){
+            System.out.println(intQueue.poll());
+        }
+        //4-1. 값 재입력
+        intQueue.add(1);
+        intQueue.add(3);
+        intQueue.add(5);
+        //4-2. 값 조회
+        System.out.println(intQueue.peek()); //처음 들어간 값 조회
+        System.out.println(intQueue.size()); //큐에 들어있는 값 갯수 조회
+        //5. 값 삭제
+        //큐는 index를 입력하는게 아닌 값을 입력해야 하는것으로 보임
+        intQueue.remove(1);
+        System.out.println(intQueue.size()); //1번 값 삭제로: 2
+        //5. 값 모두 삭제
+        intQueue.clear();
+        System.out.println(intQueue.size()); //모두 삭제로 0
+
+	*Set : 순서가 없는 데이터의 집합(데이터 중복을 허용하지않음) - 순서없고 중복없는 배열
+        HashSet, TreeSet 등으로 응용해서 같이 사용 가능.
+        Set은 생성자가 없는 껍데기라서 바로 생성할 수 없음(?)
+        생성자가 존재하는 HashSet을 이용해서 테스트
+
+        //1. Set 생성
+        Set<Integer> intSet = new HashSet<Integer>();
+        //2. 값 입력
+        intSet.add(3);
+        intSet.add(9);
+        intSet.add(6);
+        intSet.add(12);
+        intSet.add(3);
+        //3-1. 값 출력
+        //value에 위에 입력된 값들이 들어가면서 for문 실행됨.
+        //중복된 값은 출력되지 않아서 4개(3,6,9,12) 만 출력됨
+        for ( Integer value: intSet ) {
+            System.out.println(value);
+        }
+        //3-2. 값 포함 여부 출력
+        System.out.println(intSet.contains(5)); //5를 포함하는지 확인: false(5가 없으므로)
+        System.out.println(intSet.contains(3)); //3를 포함하는지 확인: ture
+        //4. 값 삭제
+        intSet.remove(3);
+        System.out.println(intSet.size()); //값:3 삭제로 남아있는건 3개
+        //5. 값 모두 삭제
+        intSet.clear();
+        System.out.println(intSet.size()); //값 모두 삭제로 0
+
+	*Map : 순서가 없는(key - value) 쌍으로 이루어진 데이터의 집합(Key값 중복을 허용하지않음)
+        key 값은 unique 하게 보장 되어야 함.
+        HashMap, TreeMap으로 응용해서 사용 가능.
+
+        //1. Map 생성
+        Map<String, Integer> intMap = new HashMap<>();
+        //2. 키값 입력
+        intMap.put("일", 1);
+        intMap.put("이", 2);
+        intMap.put("삼", 3);
+        intMap.put("사", 4); //중복 key 값
+        intMap.put("사", 5); //중복 key 값
+        //3. 값 출력
+        //key 조회시 중복된 값은 하나만 출력
+        //value 조회시 중복된 값은 마지막에 입력된 값으로 출력
+        for ( String key : intMap.keySet() ){ //key 출력
+            System.out.println(key);
+        }
+        for ( Integer value : intMap.values() ){ //value 출력
+            System.out.println(value);
+        }
+        //4. 키값으로 value값 조회
+        System.out.println(intMap.get("이")); //해당하는 값인 value값 2 출력
+        System.out.println(intMap.get("사")); //해당하는값 4,5 두개 중 나중에 입력된 5를 출력
+        //5. 값 삭제
+        intMap.remove("사");//remove 안에 해당하는 key값을 입력
+        System.out.println(intMap.get("사"));//삭제 후 값 없어서 null 출력
+        //6. 값 모두 삭제
+        intMap.clear();
+        System.out.println(intMap.size()); //모두 삭제 후 값 0
+
+
+[객체지향언어]
+*객체는 필드와 메서드로 구성 (자동차 예시)
+	필드 = 속성: 회사, 모델, 색상, 가격, 속도 등
+	메서드 = 행위: 가속, 브레이크, 기어변속, 조명, 경적 등
+	Person ---------gasPedal(50)------------> Car
+	       <---------return speed;-----------
+	gasPedal: 메서드
+	50: 파라미터(매개값)
+	return speed: 리턴값
+
+*관계
+	사용관계: 사람이 자동차를 사용하는 것
+	포함관계: 자동차에 타이어, 핸들, 라이트 등이 포함되어있는 것
+	상속관계: 엔진을 자동차와 기차가 같이 사용하는 것(상속 받아 쓸수있는것)
+
+*개념
+	캡슐화: 1. 필드(속성)와 메서드(행위)를 묶어서 하나의 객체로 만듬.
+		   2. 실제 내부 구현내용은 외부에서 알 수 없게 감추는 것
+		   3. 보안적인 측면에서 외적인 요인으로 객체가 변화하지 않음.
+		   4. 접근제어자를 사용해 노출 시킬지 감출지 결정(코드짤때 처음 public)
+	상속: 1. 부모객체가 가지고있는 필드와 메서드를 자식 객체에게 물려주어 자식객체는 이를 사용할 수 있다.
+		 2. 객체간의 구조 파악이 쉬워짐.
+		 3. 부모객체에서 수정하면 자식객체에 전부 반영되어 일관성 유지
+		 4. 필드와 메서드를 상속받아 사용하기 대문에 코드의 중복이 줄어들며 코드의 재사용성이 증가됨
+	다형성(여러개의 형태로 표현): 객체가 연산을 수행할 때 고유한 특성에 따라 여러형태로 재구성 되는 것
+	추상화: 공통적이고 중요한 것들을 모아 객체를 모델링하는 것
+
+*클래스: 객체를 생성하기 위해서 설계도가 필요. 설계도가 클래스
+		클래스를 토대로 생성된 객체를 해당 클래스의 '인스턴스' 라고 함.
+
+	클래스 만드는 4가지 STEP
+	1. 만들려고 하는 설계도를 선언(클래스 선언)
+	2. 객체가 가지고 있어야 할 속성(필드)을 정의
+	3. 객체를 생성하는 방식을 정의 (생성자)
+	4. 객체가 가지고 있어야 할 행위(매서드)를 정의
+
+	[클래스 생성]
+
+//1. 만들려고 하는 클래스 선언
+	public class "Car" {   //클래스 명
+//2. 필드 정의
+		//2-1. 고유 데이터 영역
+		String company; // 제조사
+		String model; // 자동차 모델
+		String color; // 자동차 색상
+		//2-2. 상태 데이터 영역
+		double price; // 자동차 가격
+		double speed; // 자동차 속도
+		char gear; // P R N D
+		boolean lights; // on, off
+		//2-3. 객체 데이터 영역
+		Tire tire;
+		Door door;
+		Handle handle;
+//3. 생성자 영역
+		public "Car" () {
+			//logic 입력 (기본 생성자는 생략이 가능)
+			System.out.println("생성자가 호출되었습니다! 객체가 생성됩니다.");
+		}
+//4. 메서드 정의
+		//gasPedal input: kmh / output: speed
+        double gasPedal (double kmh) {
+            speed = kmh;
+            return speed;
+        } //double kmh가 input변환해서 speed로 주는게 output
+
+        //BrakePedal input: X / output: speed
+        double brakePedal () {
+            speed = 0;
+            return speed;
+        } //input은 없고 speed를 output
+
+        //changeGear input: gear / output: gear
+        char changeGear (char type) {
+            gear = type;
+            return gear;
+        } //변경한 gear type을 받아서 gear로 output
+
+        //onOffLight input: X / output: lights
+        boolean onOffLight () {
+            lights = !lights;
+            return  lights;
+        } //on/off 밖에 없으니 가지고 있는 값을 != 처리 해서 output
+
+        //horn input: X / output: X
+        void horn () {
+            System.out.println("빵빵!");
+    }
+}
+
+*오버로딩
+	 조건: 매서드의 이름은 동일(println), 매개변수(int, long, boolean 등)의 갯수, 타입, 순서가 달라야 한다.
+	 장점: 1. 메서드의 이름 절약 가능. 상황에 따른 동작을 개별로 정의 (안되있다면 printlnInt, printlnString 등으로 각기 써야했을것)
+	//오버로딩: String modelName 하나를 가지고 3개의 생성자 사용
+	//(1)
+		public CarTest(String modelName) {
+			model = modelName;
+			System.out.println("첫번째 생성자가 호출 되었습니다.");
+		}
+	//(2)
+		public CarTest(String modelName, String colorName) {
+			model = modelName;
+			color = colorName;
+			System.out.println("두번째 생성자가 호출 되었습니다.");
+		}
+	//(3)
+		public CarTest(String modelName, String colorName, double priceValue) {
+			model = modelName;
+			color = colorName;
+			price = priceValue;
+			System.out.println("세번째 생성자가 호출 되었습니다.");
+		}
+
+*기본형 매개변수는 기본값이 변동이 없지만, 참조형 매개변수는 기본값과 불러온값 모두 변경된다.
+
+*멤버: 선언하는 방법에 따라서 구분됨.
+	인스턴트 멤버 = 인스턴스 필드 + 인스턴스 메서드
+	클래스 멤버 = 클래스 필드 + 클래스 메서드
+
+	클래스 멤버는 객체를 만들지 않고 클래스명으로 바로 접근 가능. 참조형변수를 만들어서도 접근이 가능하지만 추천하지 않음.
+	클래스 필드에 인스턴스 메서드는 사용이 가능하나 반대의 경우는 안됨.
+
+*지역변수
+	해당 메서드가 실행 될 때 마다 독립적인 값을 저장하고 관리.
+	지역변수는 메서드 내부에서 정의 될 때 생성되며, 메서드가 종료 될 때 소멸된다.
+	public class Main {
+		public static void main(String[] args) {
+			Main main = new Main();
+			System.out.println(main.getNumber()); //2
+			System.out.println(main.getNumber()); //2
+		}
+
+		public int getNumber() {
+			//지역변수
+			int number = 1;
+			number += 1;
+			return number;
+		}
+	}
+
+*this와 this()
+this   1. 생성자를 선언할때 매개변수명과 객체의 필드명이 동일 할 경우 가장 가까운 매개변수명을 가르킴.
+	      상황에 따라 자기 자신에게 값을 대입하는 상황이 생겨버려서 생성자를 선언할 때는 this를 사용하는 것.
+	   2. 객체의 메서드 부분에서 리턴타입이 자신의 클레스 타입이면 this를 사용해서 자기 주소를 반환 가능.
+this() 	 객체 내부 생성자 및 메서드에서 해당 객체의 생성자를 호출하기위해 사용. 코드의 중복을 제거 할 수 있음
+
+*접근제어자: 클래스 내부에 선언된 데이터를 보호하기 위해서 사용.
+			클래스, 생성자에는 public, default만 사용가능.	메서드&멤버변수는 public, protected, default, private
+	public: 접근 제한이 전혀 없음.
+	protected: 같은 패키지 내에서 다른 패키지의 자손클래스에서 접근이 가능
+	default: 같은 패키지 내에서만 접근이 가능
+	private: 같은 클래스 내에서만 접근 가능
+
+★Getter, Setter (메소드)
+	직접적인 값의 조회/셋팅 방지하기위해서 사용
+	생성규칙은: set/get + 필드이름(첫글자 대문자)
+	[Getter]
+	private double speed;
+
+	public String getModel(){
+		return model;
+	}
+	[Setter]
+	private double speed;
+
+	public void setModel(String model){
+		this.model = model;
+	}
+
+★상속
+	사용방법: public class 자식클래스 extends 부모클래스{}
+	1. 부모클래스에 새로운 필드와 메서드가 추가되면 자식클래스는 이를 상속받아 사용가능.
+	2. 자식클래스에 새로운 필드와 메서드가 추가되어도 부모클래스는 어떠한 영양 받지 않음.
+	3. 자식클래스의 멤버 개수는 부모 클래스보다 항상 같거나 많음.
+	4. 자식클래스는 하나의 부모 클래스만 가질수 있음. (다중상속을 허용하지 않음)
+
+*final class, final method
+	클래스에 final 키워드를 지정하면 최종적인 클래스가 됨으로 더 이상 상속 할 수 없는 클래스가 됨.
+	메서드에 final 키워드를 지정하면 최종적인 메서드가 됨으로 더 이상 오버라이딩 할 수 없는 메서드가 됨.
+
+*Object 클래스
+	Java 내 모든 클래스의 최상위 클래스
+
+*오버라이드
+	부모클래스로부터 상속받은 메서드의 내용을 재정의 하는 것.
+	조건	1. 선언부가 부모클래스의 메서드와 일치해야 한다.
+		2. 접근 제어자를 부모 클래스의 메서드 보다 좁은 범위로 변경 할 수 없다.
+		3. 예외는 부모 클래스의 메서드 보다 많이 선언 할 수 없다.
+
+*super 와 super()
+super-	부모클래스의 멤버를 참조 할 수 있는 키워드.
+		예전 this. 사용했을때와 동일하게 super. 사용하면 부모의 클래스에 메서드 값이 저장됨.
+super()-부모클래스의 생성자를 호출할 수 있는 키워드.
+		눈에 보이진 않지만 super();를 자식클래스 생성자 첫줄에 자동으로 추가해 줌.
+
+*다형성
+	(상속)
+	부모: mom / 자식 children 일 때
+	1. mom mom = new children(); 으로 부모가 될 순 있다. (자동형변환)
+	2. 반대로 children children = new mom(); 은 될 수 없다.
+	1번 처럼 자동 형 변환 된 경우에만 children children = (children) mom 으로 다시 자식으로 돌아갈 수 있다.
+//확인필요	(인터페이스)
+//	Interface A {} //인터페이스 A
+//	class B implements A {} //B라는 클래스에 A라는 인터페이스 붙힘
+//	class C extends B {} //C클래스는 B클래스의 자식클래스
+//	1. A.a1 = new B();   //A 인터페이스에 구편체 B 대입 (B가 A인터페이스를 붙혀서 가능)
+//	2. A.a2 = new C();  //A 인터페이스에 구편체 B를 상속받은 C 대입 (C가 B를 상속받았고 B는 A인터페이스가 붙어있어 가능)
+
+*instanceof
+	다형성 기능으로 인해 해당 클래스의 원래 클래스명을 체크 하는 것.
+	{객체명} instanceof {클래스명} / true|false 로 출력
+	class Parent { }
+	class Child extends Parent { }
+	class Brother extends Parent { }
+	public class Main {
+    public static void main(String[] args) {
+        Parent p = new Parent();
+		//모든 클래스의 최상단은 Object, Parent로 만들어서 Parent도 true, child는 아니여서 false
+        System.out.println(p instanceof Object); // true 출력
+        System.out.println(p instanceof Parent); // true 출력
+        System.out.println(p instanceof Child);  // false 출력
+
+        Parent c = new Child();
+		//모든 클래스의 최상단은 Object, child로 생성 되었으니 parent랑 child 모두 true
+        System.out.println(c instanceof Object); // true 출력
+        System.out.println(c instanceof Parent); // true 출력
+        System.out.println(c instanceof Child);  // true 출력
+
+		}
+	}
+
+[추상..클래스 (abstract)]
+*부모클래스가 메서드를 미완성 시킨걸 자식클래스가 완성 시키는 것..?
+ class 앞에 abstract 키워드를 넣어서 선언 [ public abstract class "클래스명 {} ]
+*상속받은 클래스에서 추상 클래스의 추상 메서드는 반드시 오버라이딩 되어야 한다.
+ 1. 3개의 메소드가 이름이 모두 동일하고 1개는 메소드명만 동일하다면 추상화 클래스를 생성 하고 사용하는 필드를 작성한다.
+ 2. 모두 동일한 2개의 메소드는 그냥 붙혀넣고 이름만 동일한 메소드는 [ public abstract void horn (); ] 이렇게 작성한다(중괄호X)
+ 3. 3개의 메소드를 사용하는 클래스에서 클래스명을 [public abstract "클래스명" extends "추상클래스명"]로 생성하고 2개는 기재안해도 되고, 다른 하나만 @override를 작성하여 기재 한다.
+─────────────────────────────────────────────────────────────────────
+	[추상화 클래스]
+	package Week3.abs;
+
+	public abstract class Car {
+        double speed;  // 자동차 속도 , km/h
+    public double gasPedal(double kmh) {
+        speed = kmh;
+        System.out.println("현재 속도는" + speed + " 입니다.");
+        return speed;
+    }
+    public double brakePedal() {
+        speed = 0;
+        System.out.println("현재 속도는" + speed + " 입니다.");
+        return speed;
+    }
+		public abstract void horn() ; //추상화 부분
+	}
+─────────────────────────────────────────────────────────────────────
+	[zenesisCar 클래스]
+	package Week3.abs;
+
+	public class ZenesisCar extends Car {
+		String company; // 자동차 회사 : GENESIS
+		String color; // 자동차 색상
+		double speed;  // 자동차 속도 , km/h
+
+		@Override  //추상화 부분
+		public void horn() {
+			System.out.println("Zenesis 빵빵");
+		}
+	}
+─────────────────────────────────────────────────────────────────────
+	[Main 클래스(테스트)]
+	package Week3.abs;
+
+	public class Main {
+		public static void main(String[] args) {
+			//각 차량 클래스에서 추상화클래스를 override 한 horn 출력
+			Car car3 = new ZenesisCar();
+			car3.horn();  //zenesis 빵빵
+
+			//다른 기능 확인
+			car3.gasPedal(30); //현재 속도는 30.0 입니다.
+			car3.brakePedal(); // 현재 속도는 0.0 입니다.
+		}
+}
+─────────────────────────────────────────────────────────────────────
+
+[인터페이스 (interface)]
+*상속 관계가 없는 다른 클래스들이 메서드를 구현해야 할 때 구현 클래스들의 동일한 사용 방법 및 행위 보장.
+ 두 객체를 연결해주는 다리 역할
+*모든 멤버변수는 public static final 로 사용 (입력안해도 컴파일러가 자동으로 추가 함)
+ 모든 메서드는 public abstract 사용 (입력안해도 컴파일러가 자동으로 추가 함)
+─────────────────────────────────────────────────────────────────────
+	 public interface 인터페이스명 {
+			public static final char A = 'A';
+		static char B = 'B';
+		final char C = 'C';
+		char D = 'D';
+
+		void turnOn(); // public abstract void turnOn();
+	}
+─────────────────────────────────────────────────────────────────────
+*작성방법: 추상클래스와 동일하게 메소드에 중괄호X, 인터페이스가 10개인데 일부만 받고싶으면 해당 클래스를 추상 클래스로 변경하면 됨.
+─────────────────────────────────────────────────────────────────────
+	public class 클래스명 implements 인터페이스명 {
+				// 추상 메서드 오버라이딩
+				@Override
+			public 리턴타입 메서드이름(매개변수, ...) {
+					   // 실행문
+			}
+	}
+─────────────────────────────────────────────────────────────────────
+*인터페이스간 상속
+ 인터페이스간 상속은 extends 키워드를 사용. 인터페이스는 다중상속이 가능
+
+*public class Main extends D implements C
+=Main은 D라는 클래스를 상속, C라는 인터페이스 연결해있음.
+
+
+*디폴트 메서드
+ 1. 추상메서드의 기본적인 구현을 제공하는 메서드.
+ 2. 앞에 default 키워드를 붙히고 {} 중괄호가 존재해야함.
+ 3. 제어자가 public이며 생략이 가능함.
+ 4. 인터페이스의 구현체들에서 필수로 재정의(override) 할 필요는 없다.
+─────────────────────────────────────────────────────────────────────
+	public class Main implements A {
+
+		@Override
+		public void a() {
+			System.out.println("A");
+		}
+
+		public static void main(String[] args) {
+			Main main = new Main();
+			main.a();
+			// 디폴트 메서드 aa() 호출
+			main.aa();
+			System.out.println();
+
+			// static 메서드 aaa() 호출
+			A.aaa();
+		}
+	}
+	interface A {
+		void a();
+		default void aa() {   // 디폴트 부분
+		System.out.println("AA");
+		}
+		static void aaa() {   // static 부분
+		System.out.println("AAA");
+		}
+	}
+─────────────────────────────────────────────────────────────────────
+
+*static 메서드
+ 1. 객체 없이 호출이 가능.
+ 2. 위와같이 인터페이스 A에 속해있으면 그냥 A.aaa;로 사용가능...
