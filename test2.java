@@ -16,20 +16,20 @@ public class test2 {
 //    }
 
     public static void main(String[] args) {
-        Test1 t1 = new Test1(10000);
-        Test1 t2 = new Test1(10000);
+        //인스턴트 t1, t2 생성
+        Test1 t1 = new Test1(100); // 생성테스트
+        Test1 t2 = new Test1(200); // 생성테스트
 
+        //t1, t2 공급가액
+        System.out.println(t1.valueOfSupply); //100.0
+        System.out.println(t2.valueOfSupply); //200.0
 
-        System.out.println(t1.valueOfSupply);
-        System.out.println(t2.valueOfSupply);
-        System.out.println(t1.getVAT());
-        System.out.println(t2.getVAT());
-        System.out.println(t1.getTotal());
-        System.out.println(t2.getTotal());
-
-
-
-
+        //t1, t2 부가세 금액
+        System.out.println(t1.getVAT()); //10.0
+        System.out.println(t2.getVAT()); //20.0
+        //t1, t2 공급가액+부가세액 합
+        System.out.println(t1.getTotal()); //110.0
+        System.out.println(t2.getTotal()); //220.0
     }
 
 }
