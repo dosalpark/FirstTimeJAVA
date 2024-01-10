@@ -1,0 +1,92 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Item {
+    List<Product> allMenu = Arrays.asList(new Product("치즈피자", "치즈피자입니다.","pizza", 10000.0));
+    //사용할 데이터들 입력
+    public static void main(String[] args) {
+        Product
+
+
+        //모든 제품 입력(혹시 몰라서 형변환이 가능한 list로 생성)
+//        List<Product> allMenu = Arrays.asList();
+//                new Product("치즈피자", "치즈피자입니다.","pizza", 10000.0),
+//                new Product("옥수수피자", "옥수수피자입니다.","pizza", 11000.0),
+//                new Product("페퍼로니피자", "페퍼로니피자입니다.","pizza", 12000.0),
+//                new Product("콤비네이션피자", "콤비네이션피자입니다.","pizza", 12000.0),
+//                new Product("윙", "윙입니다..","side", 8000.0),
+//                new Product("봉", "봉입니다..","side", 9000.0),
+//                new Product("치즈스틱", "치즈스틱입니다.","side", 5000.0),
+//                new Product("감자튀김", "감자튀김입니다.","side", 4000.0),
+//                new Product("핫소스", "핫소스입니다.","source", 300.0),
+//                new Product("파마산치즈", "파마산치즈입니다.","source", 200.0),
+//                new Product("갈릭디핑", "갈릭디핑입니다.","source", 500.0),
+//                new Product("콜라", "콜라입니다.","drink", 1600.0),
+//                new Product("제로콜라", "제로콜라입니다.","drink", 1800.0),
+//                new Product("사이다", "사이다입니다.","drink", 1600.0),
+//                new Product("환타", "환타입니다.","drink", 1500.0));
+//        List<Product> categoryMenu = Arrays.asList(
+//                new Product("치즈피자", "치즈피자입니다.","pizza", 10000.0),
+//                new Product("윙", "윙입니다..","side", 8000.0),
+//                new Product("핫소스", "핫소스입니다.","source", 300.0),
+//                new Product("콜라", "콜라입니다.","drink", 1600.0));
+    }
+}
+
+
+
+//    //pizza메뉴 함수
+//    public static void pizza() {
+//        List<String> pizza = new ArrayList<>();
+//        pizza.add("치즈피자/치즈피자입니다.10000.0");
+//        pizza.add("옥수수피자/옥수수피자입니다.11000.0");
+//        pizza.add("페퍼로니피자/페퍼로니피자입니다.12000.0");
+//        pizza.add("콤비네이션피자/콤비네이션피자입니다.12000.0");
+//    }
+//    //source메뉴 함수
+//    public static void source() {
+//        List<String> source = new ArrayList<>();
+//        source.add("핫소스/핫소스입니다.300.0");
+//        source.add("파마산치즈/파마산치즈입니다.200.0");
+//        source.add("갈릭디핑/갈릭디핑입니다.500.0");
+//    }
+//
+//    //side메뉴 함수
+//    public static void side() {
+//        List<String> side = new ArrayList<>();
+//        side.add("윙/윙입니다..8000.0");
+//        side.add("봉/봉입니다..9000.0");
+//        side.add("치즈스틱/치즈스틱입니다.5000.0");
+//        side.add("감자튀김/감자튀김입니다.4000.0");
+//    }
+//    //drink메뉴 함수
+//    public static void drink() {
+//        List<String> drink = new ArrayList<>();
+//        drink.add("콜라/콜라입니다.1600.0");
+//        drink.add("제로콜라/제로콜라입니다.1800.0");
+//        drink.add("사이다/사이다입니다.1600.0");
+//        drink.add("환타/환타입니다.1500.0");
+//    }
+
+
+
+
+        System.out.println("pizza zip 에 오신걸 환영합니다.");
+        System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.\n");
+        System.out.println("1. Pizza              | 피자 입니다.");
+        System.out.println("2. Source             | 소스 입니다.");
+        System.out.println("3. Side               | 사이드 입니다.");
+        System.out.println("4. Drink              | 음료 입니다.");
+        System.out.println("============================================");
+        System.out.println("5. 주문");
+        System.out.println("6. 취소");
+        System.out.println("이동하실 메뉴를 선택 해 주세요.");
+
+1 피자로 들어옴
+1 치즈피자
+1 장바구니에 치즈피자가 추가되었습니다.
+더주문하시려면 상품번호를 이전화면으로 돌아가실려면 9번을 눌러주세요
+
+1
+
